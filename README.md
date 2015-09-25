@@ -4,10 +4,14 @@ A modular bot for the free voice/text messaging software Discord, written for Py
 # Dependencies
 To run discordbot you need the following packages for Python 3:
 
-* discord.py - API for Discord - `pip install discord.py`
-* praw - API for the Reddit module - `pip install praw`
-* urbandict - API for the Urban Dictionary module - `pip install urbandict`
-* wolframalpha - API for the Wolfram Alpha moudle - `pip install wolframalpha`
+* discord.py - API for Discord ([info for contributors](https://github.com/Rapptz/discord.py))
+  * `pip install discord.py`
+* praw - API for the Reddit module
+  * `pip install praw`
+* urbandict - API for the Urban Dictionary module
+  * `pip install urbandict`
+* wolframalpha - API for the Wolfram Alpha moudle
+  * `pip install wolframalpha`
 
 # Usage
 Start the bot via `python3 discordbot.py`.
@@ -20,7 +24,7 @@ waapi yourwolframalphaapikey
 ```
 
 # To do list
-* Clean code
+* Clean code and add comments
 * Isolate the modules so that they can be enabled or disabled dynamically
 * Add additional modules
 * Improve stability (recover from connection problems)
