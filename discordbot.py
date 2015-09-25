@@ -7,10 +7,10 @@ tb = False
 import traceback;tb = True # This import is for debugging purpose (see except blocks)
 
 # Import bot modules
-import redditmodule
-import urbandictmodule
-import respondmodule
-import walphamodule
+import modules.redditmodule
+import modules.urbandictmodule
+import modules.respondmodule
+import modules.walphamodule
 
 def initreddit(): # Initialize Reddit API
     try:
