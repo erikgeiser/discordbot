@@ -1,5 +1,4 @@
 import discord
-import praw
 import urbandict
 import wolframalpha
 
@@ -7,20 +6,10 @@ tb = False
 import traceback;tb = True # This import is for debugging purpose (see except blocks)
 
 # Import bot modules
-import modules.redditmodule
+from modules.redditmodule import *
 import modules.urbandictmodule
 import modules.respondmodule
 import modules.walphamodule
-
-def initreddit(): # Initialize Reddit API
-    try:
-        user_agent = "discord-redditmodule"
-        r = praw.Reddit(user_agent=user_agent)
-        return r
-    except:
-        if tb: traceback.print_exc()
-        return -1
-
 
 def initdiscord(mail,pw): # Initialize Discord API
     try:
@@ -72,17 +61,17 @@ def main():
     # Get APIs
     client = initdiscord(userdata["mail"],userdata["pw"])
     if client==-1: return -1
-    r = initreddit()
-    if r==-1: return -1
+    reddit = Mreddit(client,"discord-redditmodule")
+    if reddit.failed: return -1
     waclient = initwa(userdata["waapi"])
-    if r==-1: return -1
+    if waclient==-1: return -1
 
     #=========================================
     #==============EVENT HANDLER==============
     #=========================================
     @client.event
     def on_message(message):
-        redditmodule.check(client,r,message)
+        reddit.check(message)
         urbandictmodule.check(client,message)
         respondmodule.check(client,message)
         walphamodule.check(client,waclient,message)
@@ -100,7 +89,7 @@ def main():
 
     @client.event
     def on_error(event, type, value, traceback):
-        print("ERROR!")
+        print(value)
 
     try:
         client.run()
