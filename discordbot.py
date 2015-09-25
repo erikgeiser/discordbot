@@ -4,7 +4,7 @@ import urbandict
 import wolframalpha
 
 tb = False
-#import traceback;tb = True # This import is for debugging purpose (see except blocks)
+import traceback;tb = True # This import is for debugging purpose (see except blocks)
 
 # Import bot modules
 import redditmodule
@@ -32,7 +32,7 @@ def initdiscord(mail,pw): # Initialize Discord API
         if tb: traceback.print_exc()
         return -1
 
-def initwa(waapi): # Initialize Discord API
+def initwa(waapi): # Initialize Wolfram Alpha API
     try:
         client = wolframalpha.Client(waapi)
         return client
@@ -44,37 +44,37 @@ def initwa(waapi): # Initialize Discord API
 
 def main():
     global tb
-    mail = ""
-    pw = ""
-    waapi = ""
+    userdata = {
+        "mail" : "",
+        "pw"   : "",
+        "waapi": ""
+    }
     # Read credentials and API codes from .login if available
     try:
         with open(".login","r") as lfile:
             login = lfile.readlines()
         for line in login:
             cmd = line.split()
-            if len(cmd)==2 and cmd[0]=="mail":
-                mail = cmd[1]
-            elif len(cmd)==2 and cmd[0]=="pw":
-                pw = cmd[1]
-            elif len(cmd)==2 and cmd[0]=="waapi":
-                waapi = cmd[1]
+            if len(cmd)==2:
+                userdata[cmd[0]] = cmd[1]
     except:
+        if tb: traceback.print_exc()
         print ("No .login file found.")
+
     # Set the values that were not initialized by .login
-    if mail=="":
-        mail = input("Email: ")
-    if pw=="":
+    if userdata["mail"]=="":
+        userdata["mail"] = input("Email: ")
+    if userdata["pw"]=="":
         pw = input("Password: ")
-    if waapi=="":
-        waapi = input("Wolfram Alpha API ID:")
+    if userdata["waapi"]=="":
+        userdata["waapi"] = input("Wolfram Alpha API ID:")
 
     # Get APIs
-    client = initdiscord(mail,pw)
+    client = initdiscord(userdata["mail"],userdata["pw"])
     if client==-1: return -1
     r = initreddit()
     if r==-1: return -1
-    waclient = initwa(waapi)
+    waclient = initwa(userdata["waapi"])
     if r==-1: return -1
 
     #=========================================
@@ -101,6 +101,7 @@ def main():
     @client.event
     def on_error(event, type, value, traceback):
         print("ERROR!")
+
     try:
         client.run()
     except:
