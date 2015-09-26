@@ -11,14 +11,9 @@ tb = False
 
 
 def initdiscord(mail,pw): # Initialize Discord API
-    try:
-        client = discord.Client()
-        client.login(mail, pw)
-        return client
-    except:
-        print("Could not initialize Discord API!")
-        if tb: traceback.print_exc()
-        return -1
+    client = discord.Client()
+    client.login(mail, pw)
+    return client
 
 
 def main():
