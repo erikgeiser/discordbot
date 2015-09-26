@@ -3,13 +3,13 @@ import urbandict
 import wolframalpha
 
 tb = False
-import traceback;tb = True # This import is for debugging purpose (see except blocks)
+#import traceback;tb = True # This import is for debugging purpose (see except blocks)
 
 # Import bot modules
 from modules.redditmodule import *
-import modules.urbandictmodule
-import modules.respondmodule
-import modules.walphamodule
+from modules.urbandictmodule import *
+from modules.respondmodule import *
+from modules.walphamodule import *
 
 def initdiscord(mail,pw): # Initialize Discord API
     try:
@@ -18,15 +18,6 @@ def initdiscord(mail,pw): # Initialize Discord API
         return client
     except:
         print("Could not initialize Discord API!")
-        if tb: traceback.print_exc()
-        return -1
-
-def initwa(waapi): # Initialize Wolfram Alpha API
-    try:
-        client = wolframalpha.Client(waapi)
-        return client
-    except:
-        print("Could not initialize Wolfram Alpha API!")
         if tb: traceback.print_exc()
         return -1
 
@@ -58,13 +49,12 @@ def main():
     if userdata["waapi"]=="":
         userdata["waapi"] = input("Wolfram Alpha API ID:")
 
-    # Get APIs
+    # Initialize Modules
     client = initdiscord(userdata["mail"],userdata["pw"])
-    if client==-1: return -1
     reddit = Mreddit(client,"discord-redditmodule")
-    if reddit.failed: return -1
-    waclient = initwa(userdata["waapi"])
-    if waclient==-1: return -1
+    walpha = Mwalpha(client,userdata["waapi"])
+    urbandict = Murbandict(client)
+    respond = Mrespond(client)
 
     #=========================================
     #==============EVENT HANDLER==============
@@ -72,9 +62,9 @@ def main():
     @client.event
     def on_message(message):
         reddit.check(message)
-        urbandictmodule.check(client,message)
-        respondmodule.check(client,message)
-        walphamodule.check(client,waclient,message)
+        urbandict.check(message)
+        respond.check(message)
+        walpha.check(message)
 
     @client.event
     def on_ready():
