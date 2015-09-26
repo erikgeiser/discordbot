@@ -80,7 +80,7 @@ def main():
                 main()
                 break
             except:
-                time.wait(10)
+                time.sleep(10)
 
     @client.event
     def on_error(event, type, value, traceback):
