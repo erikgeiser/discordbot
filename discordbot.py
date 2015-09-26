@@ -75,7 +75,7 @@ def main():
 
     @client.event
     def on_disconnect():
-        while true:
+        while True:
             try:
                 main()
                 break
