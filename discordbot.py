@@ -1,25 +1,12 @@
 import discord
-import praw
-import urbandict
-import wolframalpha
+# Import bot modules
+from modules.redditmodule import *
+from modules.urbandictmodule import *
+from modules.respondmodule import *
+from modules.walphamodule import *
 
 tb = False
-import traceback;tb = True # This import is for debugging purpose (see except blocks)
-
-# Import bot modules
-import redditmodule
-import urbandictmodule
-import respondmodule
-import walphamodule
-
-def initreddit(): # Initialize Reddit API
-    try:
-        user_agent = "discord-redditmodule"
-        r = praw.Reddit(user_agent=user_agent)
-        return r
-    except:
-        if tb: traceback.print_exc()
-        return -1
+#import traceback;tb = True # This import is for debugging purpose (see except blocks)
 
 
 def initdiscord(mail,pw): # Initialize Discord API
@@ -29,15 +16,6 @@ def initdiscord(mail,pw): # Initialize Discord API
         return client
     except:
         print("Could not initialize Discord API!")
-        if tb: traceback.print_exc()
-        return -1
-
-def initwa(waapi): # Initialize Wolfram Alpha API
-    try:
-        client = wolframalpha.Client(waapi)
-        return client
-    except:
-        print("Could not initialize Wolfram Alpha API!")
         if tb: traceback.print_exc()
         return -1
 
@@ -69,23 +47,22 @@ def main():
     if userdata["waapi"]=="":
         userdata["waapi"] = input("Wolfram Alpha API ID:")
 
-    # Get APIs
+    # Initialize Modules
     client = initdiscord(userdata["mail"],userdata["pw"])
-    if client==-1: return -1
-    r = initreddit()
-    if r==-1: return -1
-    waclient = initwa(userdata["waapi"])
-    if r==-1: return -1
+    reddit = Mreddit(client,"discord-redditmodule")
+    walpha = Mwalpha(client,userdata["waapi"])
+    urbandict = Murbandict(client)
+    respond = Mrespond(client)
 
     #=========================================
     #==============EVENT HANDLER==============
     #=========================================
     @client.event
     def on_message(message):
-        redditmodule.check(client,r,message)
-        urbandictmodule.check(client,message)
-        respondmodule.check(client,message)
-        walphamodule.check(client,waclient,message)
+        reddit.check(message)
+        urbandict.check(message)
+        respond.check(message)
+        walpha.check(message)
 
     @client.event
     def on_ready():
@@ -100,7 +77,7 @@ def main():
 
     @client.event
     def on_error(event, type, value, traceback):
-        print("ERROR!")
+        print(value)
 
     try:
         client.run()
