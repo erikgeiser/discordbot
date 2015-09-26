@@ -49,11 +49,18 @@ def main():
         userdata["waapi"] = input("Wolfram Alpha API ID:")
 
     # Initialize Modules
-    client = initdiscord(userdata["mail"],userdata["pw"])
-    reddit = Mreddit(client,"discord-redditmodule")
-    walpha = Mwalpha(client,userdata["waapi"])
-    urbandict = Murbandict(client)
-    respond = Mrespond(client)
+    while True:
+        try:
+            print("Connecting to APIs:",end=" ")
+            client = initdiscord(userdata["mail"],userdata["pw"])
+            reddit = Mreddit(client,"discord-redditmodule")
+            walpha = Mwalpha(client,userdata["waapi"])
+            urbandict = Murbandict(client)
+            respond = Mrespond(client)
+            break
+        except:
+            print("Failed")
+            time.sleep(10)
 
 
     #=========================================
@@ -75,12 +82,8 @@ def main():
 
     @client.event
     def on_disconnect():
-        while True:
-            try:
-                main()
-                break
-            except:
-                time.sleep(10)
+        print("Disconnected! Restarting bot...")
+        main()
 
     @client.event
     def on_error(event, type, value, traceback):
