@@ -10,11 +10,6 @@ tb = False
 #import traceback;tb = True # This import is for debugging purpose (see except blocks)
 
 
-def initdiscord(mail,pw): # Initialize Discord API
-    client = discord.Client()
-    client.login(mail, pw)
-    return client
-
 
 def main():
     global tb
@@ -47,7 +42,8 @@ def main():
     while True:
         try:
             print("Connecting to APIs:",end=" ")
-            client = initdiscord(userdata["mail"],userdata["pw"])
+            client = discord.Client()
+            client.login(userdata["mail"],userdata["pw"])
             reddit = Mreddit(client,"discord-redditmodule")
             walpha = Mwalpha(client,userdata["waapi"])
             urbandict = Murbandict(client)
