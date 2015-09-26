@@ -1,15 +1,13 @@
 import discord
-import urbandict
-import wolframalpha
-
-tb = False
-#import traceback;tb = True # This import is for debugging purpose (see except blocks)
-
 # Import bot modules
 from modules.redditmodule import *
 from modules.urbandictmodule import *
 from modules.respondmodule import *
 from modules.walphamodule import *
+
+tb = False
+#import traceback;tb = True # This import is for debugging purpose (see except blocks)
+
 
 def initdiscord(mail,pw): # Initialize Discord API
     try:
