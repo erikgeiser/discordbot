@@ -54,7 +54,7 @@ def main():
     urbandict = Murbandict(client)
     respond = Mrespond(client)
 
-    
+
     #=========================================
     #==============EVENT HANDLER==============
     #=========================================
@@ -67,7 +67,6 @@ def main():
 
     @client.event
     def on_ready():
-        client.edit_profile(userdata["pw"], username="fagbot")
         print('Logged in as')
         print(client.user.name)
         print(client.user.id)
