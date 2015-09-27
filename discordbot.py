@@ -43,8 +43,9 @@ def main():
     print("Connecting to APIs.")
     client = discord.Client()
     while not client.is_logged_in:
-        client.login(userdata["mail"],userdata["pw"])
-        if not client.is_logged_in:
+        try:
+            client.login(userdata["mail"],userdata["pw"])
+        except:
             print("Discord login failed. Next attempt in 10s.")
             time.wait(10)
     reddit = Mreddit(client,"discord-redditmodule")
