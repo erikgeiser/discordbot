@@ -12,7 +12,7 @@ class Murbandict:
     def check(self,message): # Scans message for commands
         msg = message.content
 
-        if msg.startswith("!def "):
+        if msg.startswith("!def ") and not self.dclient.user.id==message.author.id:
             print("Urbandictionary module called!")
             query = msg.replace("!def ","")
 
