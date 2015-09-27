@@ -41,13 +41,15 @@ def main():
     # Initialize Modules
 
     print("Connecting to APIs.")
-    client = discord.Client()
-    while not client.is_logged_in:
+    logged_in = false
+    while not logged_in:
         try:
+            client = discord.Client()
             client.login(userdata["mail"],userdata["pw"])
+            logged_in = client.is_logged_in
         except:
             print("Discord login failed. Next attempt in 10s.")
-            time.wait(10)
+            time.sleep(10)
     reddit = Mreddit(client,"discord-redditmodule")
     walpha = Mwalpha(client,userdata["waapi"])
     urbandict = Murbandict(client)
