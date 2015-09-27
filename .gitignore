@@ -1,6 +1,8 @@
 # discordbot credentials and auth id file
 .login
 .auth
+.keywords
+.commands
 
 __pycache__/
 # Windows image file caches

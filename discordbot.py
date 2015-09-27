@@ -1,14 +1,14 @@
 import discord
 import time
-from socket import gethostname
 # Import bot modules
+from modules.adminmodule import *
 from modules.redditmodule import *
 from modules.urbandictmodule import *
 from modules.respondmodule import *
 from modules.walphamodule import *
 
 tb = False
-#import traceback;tb = True # This import is for debugging purpose (see except blocks)
+import traceback;tb = True # This import is for debugging purpose (see except blocks)
 
 
 
@@ -45,12 +45,14 @@ def main():
     try:
         client = discord.Client()
         client.login(userdata["mail"],userdata["pw"])
-        reddit = Mreddit(client,"discord-redditmodule")
+        reddit = Mreddit(client)
         walpha = Mwalpha(client,userdata["waapi"])
         urbandict = Murbandict(client)
-        respond = Mrespond(client,userdata["pw"])
+        respond = Mrespond(client)
+        admin = Madmin(client,userdata["pw"])
     except:
         print("Some APIs could not be initialized.")
+        if tb: traceback.print_exc()
         return -1
 
 
@@ -61,12 +63,12 @@ def main():
     def on_message(message):
         reddit.check(message)
         urbandict.check(message)
+        admin.check(message)
         respond.check(message)
         walpha.check(message)
 
     @client.event
     def on_ready():
-        client.edit_profile("Q2w3E4r5",username=client.user.name+" @"+gethostname())
         print('Logged in as')
         print(client.user.name)
         print(client.user.id)

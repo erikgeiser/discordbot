@@ -1,20 +1,20 @@
 """
     Reddit Module of the Discord Bot
 """
+
 import praw
 
 class Mreddit:
 
-    def __init__(self,dclient,user_agent):
+    def __init__(self,dclient):
         try:
             self.dclient = dclient
-            self.user_agent = user_agent
-            self.rclient = praw.Reddit(user_agent=user_agent)
+            self.rclient = praw.Reddit(user_agent="discord-redditmodule")
             self.failed = False
         except:
             self.failed = True
 
-    def getredditnews(self,channel,subreddit):
+    def getredditnews(self,channel,subreddit): # Fetches submissions from reddit and posts them
 
         newslist = self.rclient.get_subreddit(subreddit).get_hot(limit=5)
 
@@ -26,7 +26,7 @@ class Mreddit:
                 self.dclient.send_message(channel,news.selftext[:len(news.selftext)].replace("*","\*"))
 
 
-    def check(self,message):
+    def check(self,message): # Scans message for commands
         msg = message.content
         if msg.startswith("!r "):
             sub = msg.replace("!r ","")
