@@ -41,12 +41,10 @@ def main():
     # Initialize Modules
 
     print("Connecting to APIs.")
-    logged_in = false
-    while not logged_in:
+    client = discord.Client()
+    while not client.logged_in():
         try:
-            client = discord.Client()
             client.login(userdata["mail"],userdata["pw"])
-            logged_in = client.is_logged_in
         except:
             print("Discord login failed. Next attempt in 10s.")
             time.sleep(10)
