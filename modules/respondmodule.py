@@ -1,57 +1,69 @@
 """
-    Reddit Module (Responds to commands that do not require any API Calls)
+    Reddit Module (Responds to (custom) commands that do not require any API Calls)
 """
 
+from socket import gethostname
+
 class Mrespond:
-
-    def __init__(self,dclient,pw): # Takes the Discord API client as argument
-        self.dclient = dclient
-        self.pw = pw
-
-    def isauthorized(self,message):
+    def loadcustom(self):
+        # Reset the dictionaries
+        self.commands = {}
+        self.keywords = {}
+        # Read custom commands from .commands
         try:
-            with open(".auth","r") as authfile:
-                authids = authfile.readlines()
+            with open(".commands","r") as resfile:
+                cmddata = resfile.readlines()
         except:
-            authids = []
+            print("No custom commands found.")
+            cmddata = []
+        # Save custom commands in dictionary
+        for line in cmddata:
+            line = line.split()
+            if len(line)>=2:
+                if line[0] not in self.commands.keys():
+                    self.commands[line[0]]=[]
+                self.commands[line[0]].append(" ".join(line[1:]))
 
-        if message.author.id+"\n" in authids:
-            return True
-        else:
-            self.dclient.send_message(message.channel,"NOT AUTHORIZED")
-            return False
+
+        # Read custom keywords from .keywords
+        try:
+            with open(".keywords","r") as resfile:
+                keydata = resfile.readlines()
+        except:
+            print("No custom keywords found.")
+            keydata = []
+        # Save custom keywords in dictionary
+        for line in keydata:
+            line = line.split()
+            if len(line)>=2:
+                if line[0] not in self.keywords.keys():
+                    self.keywords[line[0]]=[]
+                self.keywords[line[0]].append(" ".join(line[1:]))
 
 
-    def check(self,message):
+    def __init__(self,dclient):
+        self.dclient = dclient
+        self.commands = {} # Dictionary for custom commands
+        self.keywords = {} # Dictionary for custom keywords
+        # Not sure wether to read the .response file once in __init__ or everytime in check
+        # self.loadcustom()
+
+    def check(self,message): # Scans message for commands
         msg = message.content
 
-        if msg.startswith("!surf"):
-            self.dclient.send_message(message.channel,"connect nqqkcg5t1dw942d0.myfritz.net:27015")
-        elif msg.startswith("!comp"):
-            self.dclient.send_message(message.channel,"connect nqqkcg5t1dw942d0.myfritz.net:27016; password fussel")
-        elif msg.startswith("!1v1"):
-            self.dclient.send_message(message.channel,"connect nqqkcg5t1dw942d0.myfritz.net:27017")
-        elif msg.startswith("!ts"):
-            self.dclient.send_message(message.channel,"nqqkcg5t1dw942d0.myfritz.net (password: fussel)")
-        elif msg.startswith("!mc") or msg.startswith("!mine") or msg.startswith("!minecraft"):
-            self.dclient.send_message(message.channel,"nqqkcg5t1dw942d0.myfritz.net:40061")
-        elif msg.startswith("!ip") or msg.startswith("!ips"):
-            self.dclient.send_message(message.channel,"**CS:GO Surf:** connect nqqkcg5t1dw942d0.myfritz.net:27015")
-            self.dclient.send_message(message.channel,"**CS:GO Comp:** connect nqqkcg5t1dw942d0.myfritz.net:27016; password fussel")
-            self.dclient.send_message(message.channel,"**CS:GO 1v1:** connect nqqkcg5t1dw942d0.myfritz.net:27017")
-            self.dclient.send_message(message.channel,"**TS:** nqqkcg5t1dw942d0.myfritz.net (password: fussel)")
-            self.dclient.send_message(message.channel,"**Minecraft:** nqqkcg5t1dw942d0.myfritz.net:40061")
-        elif msg.startswith("!id"):
+        if msg.startswith("!id"):
             self.dclient.send_message(message.channel,"**"+message.author.name+" ID**: "+message.author.id)
-        elif msg.startswith("!! ") and self.isauthorized(message):
-            if msg.startswith("!! "):
-                cmd = msg.replace("!! ","")
-                cmd = cmd.split()
-                if len(cmd)==2:
-                    if cmd[0]=="rename":
-                        print("Renaming bot to: "+cmd[1])
-                        self.dclient.edit_profile(self.pw,username=cmd[1])
-                    if cmd[0]=="authid":
-                        if cmd[1].isnumeric():
-                            with open(".auth","a") as authfile:
-                                authfile.write(cmd[1])
+        if msg.startswith("!host") or msg.startswith("!where"):
+            self.dclient.send_message(message.channel,"I'm currently running on "+gethostname())
+
+        self.loadcustom()
+        # Handle custom commands
+        for cmd in self.commands.keys(): # Check for custom commands
+            if msg.startswith(cmd):
+                for answer in self.commands[cmd]: # Support answers with multiple lines
+                    self.dclient.send_message(message.channel,answer)
+        # Handle custom keywords
+        for cmd in self.keywords.keys(): # Check for custom commands
+            if cmd.lower() in msg.lower():
+                for answer in self.keywords[cmd]: # Support answers with multiple lines
+                    self.dclient.send_message(message.channel,answer)
