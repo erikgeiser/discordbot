@@ -39,19 +39,18 @@ def main():
         userdata["waapi"] = input("Wolfram Alpha API ID:")
 
     # Initialize Modules
-    while True:
-        try:
-            print("Connecting to APIs:",end=" ")
-            client = discord.Client()
-            client.login(userdata["mail"],userdata["pw"])
-            reddit = Mreddit(client,"discord-redditmodule")
-            walpha = Mwalpha(client,userdata["waapi"])
-            urbandict = Murbandict(client)
-            respond = Mrespond(client)
-            break
-        except:
-            print("Failed")
-            time.sleep(10)
+
+    print("Connecting to APIs.")
+    client = discord.Client()
+    while not client.is_logged_in:
+        client.login(userdata["mail"],userdata["pw"])
+        if not client.is_logged_in:
+            print("Discord login failed. Next attempt in 10s.")
+            time.wait(10)
+    reddit = Mreddit(client,"discord-redditmodule")
+    walpha = Mwalpha(client,userdata["waapi"])
+    urbandict = Murbandict(client)
+    respond = Mrespond(client)
 
 
     #=========================================
