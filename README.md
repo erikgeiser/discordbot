@@ -22,6 +22,7 @@ mail mailadress@domain.com
 pw yourpassword
 waapi yourwolframalphaapikey
 ```
+Some commands are restricted for the common user. You can add the Discord IDs of the users that are authorized to do administrative tasks in a file called `.auth` so that they can execute said commands.
 
 # To do list
 * Clean code and add comments
