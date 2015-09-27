@@ -16,7 +16,7 @@ To run discordbot you need the following packages for Python 3:
 Python 2.x may work but is neither supported nor tested.
 
 # Usage
-Start the bot via `python3 discordbot.py`.
+Start the bot via `python3 discordbot.py`. The bot account should already be member of the servers that want to use the bot.
 
 On startup you will be asked for the Discord login credentials as well as for your Wolfram Alpha API Key. You can also specify these details if you create a file called `.login` in the discordbot folder with the following content:
 ```
@@ -48,6 +48,8 @@ food Now I'm hungry
   * `!def word n`: n specifies the number of definitions that will be shown
 * **Wolfram Alpha module**
   * `!wa query`: Returns the results for the given query from Wolfram Alpha
+* **Wikipedia module**
+  * `!wiki page` Returns title link and part of the content from Wikipedia page
 * **Respond module**
   * `!id`: Prints your ID
   * `!host`/`!where`: Prints out the bot's hostname

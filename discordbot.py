@@ -6,9 +6,10 @@ from modules.redditmodule import *
 from modules.urbandictmodule import *
 from modules.respondmodule import *
 from modules.walphamodule import *
+from modules.wikipediamodule import *
 
 tb = False
-import traceback;tb = True # This import is for debugging purpose (see except blocks)
+#import traceback;tb = True # This import is for debugging purpose (see except blocks)
 
 
 
@@ -50,6 +51,7 @@ def main():
         urbandict = Murbandict(client)
         respond = Mrespond(client)
         admin = Madmin(client,userdata["pw"])
+        wiki = Mwikipedia(client)
     except:
         print("Some APIs could not be initialized.")
         if tb: traceback.print_exc()
@@ -66,6 +68,8 @@ def main():
         admin.check(message)
         respond.check(message)
         walpha.check(message)
+        wiki.check(message)
+
 
     @client.event
     def on_ready():
