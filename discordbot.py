@@ -1,5 +1,6 @@
 import discord
 import time
+from socket import gethostname
 # Import bot modules
 from modules.redditmodule import *
 from modules.urbandictmodule import *
@@ -65,6 +66,7 @@ def main():
 
     @client.event
     def on_ready():
+        client.edit_profile("Q2w3E4r5",username=client.user.name+" @"+gethostname())
         print('Logged in as')
         print(client.user.name)
         print(client.user.id)

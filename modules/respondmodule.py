@@ -1,6 +1,8 @@
 """
     Reddit Module (Responds to commands that do not require any API Calls)
 """
+from socket import gethostname
+
 
 class Mrespond:
 
@@ -50,7 +52,7 @@ class Mrespond:
                 if len(cmd)==2:
                     if cmd[0]=="rename":
                         print("Renaming bot to: "+cmd[1])
-                        self.dclient.edit_profile(self.pw,username=cmd[1])
+                        self.dclient.edit_profile(self.pw,username=cmd[1]" @"+gethostname())
                     if cmd[0]=="authid":
                         if cmd[1].isnumeric():
                             with open(".auth","a") as authfile:
