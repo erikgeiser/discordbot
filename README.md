@@ -60,4 +60,3 @@ food Now I'm hungry
 * Improve code documentation
 * Add additional modules and improve existing ones
 * Load modules dynamically (maybe autodetect new modules, *might be out of scope though*)
-* Load modules dynamically (maybe autodetect new modules, *might be out of scope though*)
