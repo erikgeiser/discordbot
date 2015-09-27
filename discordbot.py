@@ -41,17 +41,16 @@ def main():
     # Initialize Modules
 
     print("Connecting to APIs.")
-    client = discord.Client()
-    while not client.logged_in():
-        try:
-            client.login(userdata["mail"],userdata["pw"])
-        except:
-            print("Discord login failed. Next attempt in 10s.")
-            time.sleep(10)
-    reddit = Mreddit(client,"discord-redditmodule")
-    walpha = Mwalpha(client,userdata["waapi"])
-    urbandict = Murbandict(client)
-    respond = Mrespond(client)
+    try:
+        client = discord.Client()
+        client.login(userdata["mail"],userdata["pw"])
+        reddit = Mreddit(client,"discord-redditmodule")
+        walpha = Mwalpha(client,userdata["waapi"])
+        urbandict = Murbandict(client)
+        respond = Mrespond(client,userdata["pw"])
+    except:
+        print("Some APIs could not be initialized.")
+        return -1
 
 
     #=========================================
@@ -73,11 +72,11 @@ def main():
 
     @client.event
     def on_disconnect():
-        print("Disconnected! Restarting bot...")
-        main()
+        print("Disconnected!")
 
     @client.event
     def on_error(event, type, value, traceback):
+        print("####ERROR IN DISCORD API:####")
         print(value)
 
     try:
