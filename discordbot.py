@@ -1,4 +1,5 @@
 import discord
+import time
 # Import bot modules
 from modules.redditmodule import *
 from modules.urbandictmodule import *
@@ -8,16 +9,6 @@ from modules.walphamodule import *
 tb = False
 #import traceback;tb = True # This import is for debugging purpose (see except blocks)
 
-
-def initdiscord(mail,pw): # Initialize Discord API
-    try:
-        client = discord.Client()
-        client.login(mail, pw)
-        return client
-    except:
-        print("Could not initialize Discord API!")
-        if tb: traceback.print_exc()
-        return -1
 
 
 def main():
@@ -48,11 +39,18 @@ def main():
         userdata["waapi"] = input("Wolfram Alpha API ID:")
 
     # Initialize Modules
-    client = initdiscord(userdata["mail"],userdata["pw"])
-    reddit = Mreddit(client,"discord-redditmodule")
-    walpha = Mwalpha(client,userdata["waapi"])
-    urbandict = Murbandict(client)
-    respond = Mrespond(client)
+
+    print("Connecting to APIs.")
+    try:
+        client = discord.Client()
+        client.login(userdata["mail"],userdata["pw"])
+        reddit = Mreddit(client,"discord-redditmodule")
+        walpha = Mwalpha(client,userdata["waapi"])
+        urbandict = Murbandict(client)
+        respond = Mrespond(client,userdata["pw"])
+    except:
+        print("Some APIs could not be initialized.")
+        return -1
 
 
     #=========================================
@@ -78,6 +76,7 @@ def main():
 
     @client.event
     def on_error(event, type, value, traceback):
+        print("####ERROR IN DISCORD API:####")
         print(value)
 
     try:
