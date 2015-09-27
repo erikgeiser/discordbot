@@ -59,7 +59,7 @@ class Mrespond:
         self.loadcustom()
         # Handle custom commands
         for cmd in self.commands.keys(): # Check for custom commands
-            if msg.startswith(cmd):
+            if msg.startswith(cmd+" "):
                 for answer in self.commands[cmd]: # Support answers with multiple lines
                     self.dclient.send_message(message.channel,answer)
         # Handle custom keywords
