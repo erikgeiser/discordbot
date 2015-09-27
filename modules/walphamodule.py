@@ -17,7 +17,7 @@ class Mwalpha:
 
     def check(self,message): # Scans message for commands
         msg = message.content
-        if msg.startswith("!wa "):
+        if msg.startswith("!wa ") and not self.dclient.user.id==message.author.id:
             msg = msg.replace("!wa ","")
 
             result = self.waclient.query(msg)
