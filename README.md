@@ -10,8 +10,10 @@ To run discordbot you need the following packages for Python 3:
   * `pip install praw`
 * urbandict - API for the Urban Dictionary module
   * `pip install urbandict`
-* wolframalpha - API for the Wolfram Alpha moudle
+* wolframalpha - API for the Wolfram Alpha module
   * `pip install wolframalpha`
+* wikipedia - API for the Wikipedia module
+  * `pip install wikipedia`
 
 Python 2.x may work but is neither supported nor tested.
 
