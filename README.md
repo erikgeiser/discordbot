@@ -14,6 +14,8 @@ To run discordbot you need the following packages for Python 3:
   * `pip install wolframalpha`
 * wikipedia - API for the Wikipedia module
   * `pip install wikipedia`
+* astropy - API for the Astrophysics Module
+  * `pip install astropy`
 
 Python 2.x may work but is neither supported nor tested.
 

@@ -48,12 +48,12 @@ def main():
         client = discord.Client()
         client.login(userdata["mail"],userdata["pw"])
         reddit = Mreddit(client)
+        astro = Mastro(client)
         walpha = Mwalpha(client,userdata["waapi"])
         urbandict = Murbandict(client)
         respond = Mrespond(client)
         admin = Madmin(client,userdata["pw"])
         wiki = Mwikipedia(client)
-        astro = Mastro(client)
     except:
         print("Some APIs could not be initialized.")
         if tb: traceback.print_exc()
@@ -92,8 +92,10 @@ def main():
 
     try:
         client.run()
-    except:
+    except KeyboardInterrupt:
         print("Stopping bot!")
+    except Exception as e:
+        print("[!] Error: %s"%e)
 
 if __name__ == "__main__":
     main()

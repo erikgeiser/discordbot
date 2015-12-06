@@ -17,7 +17,7 @@ class Mastro:
             if len(coords)!=2:
                 self.dclient.send_message(message.channel,"Invalid Coordinates")
             else:
-                gal = eq2gal(coords[0],coords[1])
+                gal = self.eq2gal(coords[0],coords[1])
                 if gal==0:
                     self.dclient.send_message(message.channel,"Invalid Coordinates")
                 else:
