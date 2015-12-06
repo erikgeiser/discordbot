@@ -21,7 +21,7 @@ class Mastro:
                 if gal==0:
                     self.dclient.send_message(message.channel,"Invalid Coordinates")
                 else:
-                    self.dclient.send_message(message.channel,"*%s in Galactic Coordinates:*\nl=%s,   b=%s" % ("/".join(coords),str(gal.l),str(gal.b)))
+                    self.dclient.send_message(message.channel,"*%s in Galactic Coordinates:*\nl=%s,   b=%s" % ("/".join(coords),str(gal.l.deg),str(gal.b.deg)))
 
 
     def eq2gal(self,ra,dec):
