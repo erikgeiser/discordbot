@@ -94,8 +94,8 @@ def main():
         client.run()
     except KeyboardInterrupt:
         print("Stopping bot!")
-    #except Exception as e:
-    #    print("[!] Error: %s"%e)
+    except Exception as e:
+        print("[!] Error: %s"%e)
 
 if __name__ == "__main__":
     main()
