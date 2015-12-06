@@ -51,15 +51,15 @@ class Mrespond:
     def check(self,message): # Scans message for commands
         msg = message.content
 
-        if msg.startswith("!id") and not self.dclient.user.id==message.author.id:
+        if msg.startswith("!id"):
             self.dclient.send_message(message.channel,"**"+message.author.name+" ID**: "+message.author.id)
-        if (msg.startswith("!host") or msg.startswith("!where")) and not self.dclient.user.id==message.author.id:
+        if msg.startswith("!host") or msg.startswith("!where"):
             self.dclient.send_message(message.channel,"I'm currently running on "+gethostname())
 
         self.loadcustom()
         # Handle custom commands
         for cmd in self.commands.keys(): # Check for custom commands
-            if msg==cmd and not self.dclient.user.id==message.author.id:
+            if msg==cmd:
                 for answer in self.commands[cmd]: # Support answers with multiple lines
                     self.dclient.send_message(message.channel,answer)
         # Handle custom keywords

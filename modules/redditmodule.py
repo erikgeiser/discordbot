@@ -28,10 +28,10 @@ class Mreddit:
 
     def check(self,message): # Scans message for commands
         msg = message.content
-        if msg.startswith("!r ") and not self.dclient.user.id==message.author.id:
+        if msg.startswith("!r "):
             sub = msg.replace("!r ","")
             self.getredditnews(message.channel, sub)
-        elif msg=="!csgo" and not self.dclient.user.id==message.author.id:
+        elif msg=="!csgo":
             self.getredditnews(message.channel, "globaloffensive")
-        elif msg=="!tfts" and not self.dclient.user.id==message.author.id:
+        elif msg=="!tfts":
             self.getredditnews(message.channel, "talesfromtechsupport")

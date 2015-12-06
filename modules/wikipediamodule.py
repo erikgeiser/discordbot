@@ -13,7 +13,7 @@ class Mwikipedia:
 
     def check(self,message): # Scans message for commands
         msg = message.content
-        if msg.startswith("!wiki ") and not self.dclient.user.id==message.author.id:
+        if msg.startswith("!wiki "):
             try:
                 result = []
                 msg = msg.replace("!wiki ","")

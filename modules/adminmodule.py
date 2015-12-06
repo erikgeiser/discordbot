@@ -24,7 +24,7 @@ class Madmin:
 
     def check(self,message): # Scans message for commands
         msg = message.content
-        if msg.startswith("!! ") and self.isauthorized(message) and not self.dclient.user.id==message.author.id:
+        if msg.startswith("!! ") and self.isauthorized(message):
             if msg.startswith("!! "):
                 cmd = msg.replace("!! ","")
                 cmd = cmd.split()
