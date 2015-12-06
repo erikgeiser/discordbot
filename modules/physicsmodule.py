@@ -21,7 +21,7 @@ class Mastro:
                 if gal==0:
                     self.dclient.send_message(message.channel,"Invalid Coordinates")
                 else:
-                    self.dclient.send_message(message.channel,"%s in Galactic Coordinates\nl=%.2f, d=%.2f"%("/".join(coords),gal.l.deg,gal.d.deg))
+                    self.dclient.send_message(message.channel,"*%s in Galactic Coordinates:*\nl=%s,   b=%s" % ("/".join(coords),str(gal.l),str(gal.b)))
 
 
     def eq2gal(self,ra,dec):
@@ -30,5 +30,6 @@ class Mastro:
             dec = Angle(dec)
             c = ICRS(ra=ra, dec=dec)
             return c.transform_to(Galactic)
-        except:
+        except Exception as e:
+            print(e)
             return 0
