@@ -7,6 +7,7 @@ from modules.urbandictmodule import *
 from modules.respondmodule import *
 from modules.walphamodule import *
 from modules.wikipediamodule import *
+from modules.physicsmodule import Mastro
 
 tb = False
 #import traceback;tb = True # This import is for debugging purpose (see except blocks)
@@ -52,6 +53,7 @@ def main():
         respond = Mrespond(client)
         admin = Madmin(client,userdata["pw"])
         wiki = Mwikipedia(client)
+        astro = Mastro(client)
     except:
         print("Some APIs could not be initialized.")
         if tb: traceback.print_exc()
@@ -69,6 +71,7 @@ def main():
         respond.check(message)
         walpha.check(message)
         wiki.check(message)
+        astro.check(message)
 
 
     @client.event
