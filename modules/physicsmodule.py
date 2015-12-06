@@ -29,6 +29,6 @@ class Mastro:
             ra = Angle(ra)
             dec = Angle(dec)
             c = ICRS(ra=ra, dec=dec)
-            return c.galactic
+            return c.transform_to(Galactic)
         except:
             return 0
