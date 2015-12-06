@@ -26,8 +26,8 @@ class Mastro:
 
     def eq2gal(self,ra,dec):
         try:
-            ra = Angle(coords[0])
-            dec = Angle(coords[1])
+            ra = Angle(ra)
+            dec = Angle(dec)
             c = ICRS(ra=ra, dec=dec)
             return c.galactic
         except:
